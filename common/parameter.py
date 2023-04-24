@@ -11,20 +11,22 @@ BaseDirectory = '/mnt/ssd/working-directory/analysis'
 DataDirectory = '/mnt/ssd/working-directory/data'
 
 #Data File and Reference channel File, usually as a sequence of files from the microscope
-SignalFile = os.path.join(DataDirectory, 'C01/lightsheet_data_Z\d{3,4}_C01.tif')
-AutofluoFile = os.path.join(DataDirectory, 'C02/lightsheet_data_Z\d{3,4}_C02.tif')
+SignalFile = os.path.join(DataDirectory, 'C01/lightsheet_data_Z\d{3,4}_C01.tif') #NOTE: Update with file path to data location
+AutofluoFile = os.path.join(DataDirectory, 'C02/lightsheet_data_Z\d{3,4}_C02.tif') #NOTE: Update with file path to data location
 
 #Resolution of the Raw Data (in um / pixel)
 OriginalResolution = (9, 9, 9);
 
 #Orientation: 1,2,3 means the same orientation as the reference and atlas files.
 #Flip axis with - sign (eg. (-1,2,3) flips z). 3D Rotate by swapping numbers. (eg. (2,1,3) swaps x and y)
-FinalOrientation = (-1, 2, -3);
+FinalOrientation = (1, -2, 3); #NOTE: Left hemisphere orientation used
+#FinalOrientation = (-1, -2, 3); #NOTE: Right hemisphere orientation used
 
 #Resolution of the Atlas (in um/ pixel)
 AtlasResolution = (25, 25, 25);
 #Resolution to downsample to for correction between channels (in um/ pixel)
-CorrectionResolution =  (12, 12, 12);
+#NOTE: We set AtlasResolution = CorrectionResolution to minimize blank areas appearing in atlas alignment for our data
+CorrectionResolution =  (25, 25, 25);
 
 #Path to registration parameters and atlases
 PathReg        = '/mnt/ssd/warping/ARA2';
@@ -44,7 +46,7 @@ transformedCellsFile = os.path.join(BaseDirectory, 'cells_transformed.json')
 
 flow = [
     {
-        'filter'             : 'RollingBackgroundSubtract',
+        'filter'             : 'PixelClassification', #NOTE: This uses an ilastik Pixel Classification filter
         'size'          	 : 5,
         "save"               : os.path.join(BaseDirectory, 'bkgrdsub/Z\d{4}.tif'),
     },
@@ -55,7 +57,7 @@ flow = [
         'max_size'           : 50,
         'min_size2'          : 3,
         'max_size2'          : 50,
-        'high_threshold'     : 450,
+        'high_threshold'     : 0.30, #NOTE: probability threshold of 0.30 was optimal for our data
         'low_threshold'      : 450,
         "save"               : os.path.join(BaseDirectory, 'labels/Z\d{4}.tif'),
     }
@@ -135,10 +137,10 @@ RegistrationAlignmentParam = {
     "movingImage"  : RegistrationResamplingParamAuto["sink"],
 
     #ants parameter files for alignment. see ants docs for definitions
-    'type_of_transform' : 'SyNRA',
+    #NOTE: We used a more simple transform to minimize blank areas appearing in the atlas alignment
+    'type_of_transform' : 'Affine',
     'reg_iterations'    : (320,320,160,0),
     'aff_sampling'      : 256,
-    'syn_sampling'      : 256,
 
     #directory of the alignment result
     "resultDirectory" :  os.path.join(BaseDirectory, 'ants_auto_to_atlas')
