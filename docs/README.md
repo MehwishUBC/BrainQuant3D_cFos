@@ -1,8 +1,30 @@
 # Optimisation of BrainQuant3D for cFos mapping
 
-Using the original BrainQuant3D package by Dr Gandhi and team (https://doi.org/10.1073/pnas.191577811), we optimised the code for cFos cell mapping in SHIELD Cleared whole mouse brain. 
+Using the original BrainQuant3D package by Dr Gandhi and team (https://doi.org/10.1073/pnas.1915778116), we optimised the code for cFos cell mapping in SHIELD Cleared whole mouse brain. 
 
-The original quick start guide is as follows:
+The ilastik filter used is found on our OSF page: https://osf.io/2j5bd/
+
+## Code Changes
+
+### parameter.py
+
+**Line 22**: `FinalOrientation = (1, -2, 3)` was used for our left hemisphere data.
+
+**Line 23**: `FinalOrientation = (-1, -2, 3)` was used for our right hemisphere data.
+
+**Line 29**: `CorrectionResolution = (25, 25, 25)` was used because setting it to the same value as `AtlasResolution` reduced blank areas that appeared in atlas alignment and registration.
+
+**Line 49**: Changing the `filter` to `PixelClassification` allows the use of an ilastik filter for cell segmentation rather than background subtraction.
+
+**Line 60**: A probability threshold of 0.30 was used because it was found to be optimal for our data after testing.
+
+**Lines 141-143**: Instead of a SyNRA transform, a more simple Affine transform was used to reduce blank areas that appeared in atlas alignment and registration.
+
+### ilastik.py
+
+**LIne 50**: Replace `None` with the filepath of the ilastik filter.
+
+## The original quick start guide is as follows:
 
 # Quickstart Guide
 
