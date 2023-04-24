@@ -47,7 +47,7 @@ class PixelClassification(FilterBase):
     def __init__(self):
         self.ram = config.thread_ram_max
         self.processes = config.processes
-        self.project = None
+        self.project = None #NOTE: Update this variable with a path to the ilastik filter
         self.output_channel = 0
         super().__init__(temp_dir = True)
 
