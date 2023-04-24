@@ -1,6 +1,6 @@
 # Optimisation of BrainQuant3D for cFos mapping
 
-Using the original BrainQuant3D package by Dr Gandhi and team (https://doi.org/10.1073/pnas.1915778116), we optimised the code for cFos cell mapping in SHIELD Cleared whole mouse brain. 
+Using the original BrainQuant3D package by Dr Gandhi and team (https://doi.org/10.1073/pnas.1915778116), we optimised the code for cFos cell mapping in SHIELD Cleared whole mouse brain in CHIMERA TBI experiments.
 
 The ilastik filter used is found on our OSF page: https://osf.io/2j5bd/
 
