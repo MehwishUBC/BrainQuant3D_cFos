@@ -1,3 +1,9 @@
+# Optimisation of BrainQuant3D for cFos mapping
+
+Using the original BrainQuant3D package by Dr Gandhi and team (https://doi.org/10.1073/pnas.191577811), we optimised the code for cFos cell mapping in SHIELD Cleared whole mouse brain. 
+
+The original quick start guide is as follows:
+
 # Quickstart Guide
 
 ## Requirements
