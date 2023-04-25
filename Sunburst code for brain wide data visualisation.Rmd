@@ -1,0 +1,41 @@
+
+```{r sunburst}
+
+
+#import data
+data2 <- read_excel("") #path in ("")
+
+
+library(d3r)
+tree <- d3_nest(data2, value_cols = "size")
+tree
+sb1 <- sunburst(tree, width="100%", legend = list(w=280), height=800)
+sb2 <- sunburst(
+tree,
+legend = FALSE,
+width = "100%",
+height = 800
+)
+
+sb1 <- sunburst(tree, width="100%", height=800)
+sb2 <- sunburst(
+tree,
+legend = FALSE,
+width = "100%",
+height = 800
+)
+div(
+style="display: flex; align-items:center;",
+div(style="width:50%; border:1px solid #ccc;", sb1),
+div(style="width:50%; border:1px solid #ccc;", sb2)
+)
+
+sb3 <- sund2b(tree, width="100%")
+div(
+  style="display: flex; align-items:center;",
+  sb3
+)
+
+```
+
+
